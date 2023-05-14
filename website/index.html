@@ -1,0 +1,12 @@
+{% extends "bootstrap_base.html" %}
+
+{% block title %}Kib@szós - Index{% endblock %}
+
+{% block content %}
+    <h1 class="d-flex justify-content-center">Kib@szós</h1>
+    <br>
+    <br>
+    <div class="d-flex justify-content-center">
+        <a class="btn btn-success btn-lg" href="{{ url_for("new_game") }}" role="button">Új játék</a>
+    </div>
+{% endblock %}
