@@ -1,3 +1,5 @@
+# Main file for the application
+
 from application import app
 
 
