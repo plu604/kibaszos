@@ -28,11 +28,15 @@ def new_game():
 @app.route("/scoreboard", methods=["GET", "POST"])
 def scoreboard():
     form = RoundScores()
+    edit_round = int(request.args.get("edit_round")) if request.args.get("edit_round") else None
+    print(form.round_number.data)
     if form.validate_on_submit():
-        # TODO this still needs the round number to be added as input
-        save_scores(form.player1_score.data, form.player2_score.data, form.player3_score.data, form.player4_score.data)
+        save_scores(form.round_number.data, form.player1_score.data, form.player2_score.data, form.player3_score.data, form.player4_score.data)
+        # I have no idea why this doesn't work properly
+        if edit_round != form.round_number.data and form.round_number.data is not None:
+            session["current_round"] += 1
         return render_template("scoreboard.html", form=form)
-    return render_template("scoreboard.html", form=form)
+    return render_template("scoreboard.html", form=form, edit_round=edit_round)
 
 
 # Route for the "rules" page - to be added later

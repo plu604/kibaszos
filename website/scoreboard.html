@@ -15,28 +15,57 @@
         <th scope="col">{{ session["player3"] }}</th>
         <th scope="col">{{ session["player4"] }}</th>
         <th scope="col">Total</th>
-        <th scope="col">Add/Edit</th>
+        <th scope="col">Mentés</th>
       </tr>
     </thead>
     <tbody>
       <!-- generating 20 rows using Jinja2. The ~ operator converts all operands into strings then concatenates them. -->
       {% for i in range(1, 21) %}
-      <tr>
-        <th scope="row">{{ session["round" ~ i]["sequence"] }}</td>
-        <td>{{ session["round" ~ i]["adu"] }}</td>
-        <td>{{ session["round" ~ i]["direction"] }}</td>
-        <td>{{ session["round" ~ i]["starts"] }}</td>
-        <form action="", method="post", novalidate>
-            {{ form.hidden_tag() }}
-            <td>{{ form.player1_score }}</td>
-            <td>{{ form.player2_score }}</td>
-            <td>{{ form.player3_score }}</td>
-            <td>{{ form.player4_score }}</td>
+        {% if i == session["current_round"] or i == edit_round %}
+          <tr id="{{ i }}">
+            <td scope="row">{{ session["round" ~ i]["sequence"] }}</td>
+            <td>{{ session["round" ~ i]["adu"] }}</td>
+            <td>{{ session["round" ~ i]["direction"] }}</td>
+            <td>{{ session["round" ~ i]["starts"] }}</td>
+            <form action="", method="post", novalidate>
+              {{ form.csrf_token() }}
+              {{ form.round_number(value=i) }}
+              <td>{{ form.player1_score(value="") }}</td>
+              <td>{{ form.player2_score(value="") }}</td>
+              <td>{{ form.player3_score(value="") }}</td>
+              <td>{{ form.player4_score(value="") }}</td>
+              <td>{{ session["round" ~ i]["scores"]["player1"] + session["round" ~ i]["scores"]["player2"] + session["round" ~ i]["scores"]["player3"] + session["round" ~ i]["scores"]["player4"] }}</td>
+              <td>{{ form.submit(class="btn btn-success btn-sm") }}</td>
+            </form>
+          </tr>
+        {% else %}
+          <tr id="{{ i }}">
+            <td scope="row">{{ session["round" ~ i]["sequence"] }}</td>
+            <td>{{ session["round" ~ i]["adu"] }}</td>
+            <td>{{ session["round" ~ i]["direction"] }}</td>
+            <td>{{ session["round" ~ i]["starts"] }}</td>
+            <td>{{ session["round" ~ i]["scores"]["player1"] }}</td>
+            <td>{{ session["round" ~ i]["scores"]["player2"] }}</td>
+            <td>{{ session["round" ~ i]["scores"]["player3"] }}</td>
+            <td>{{ session["round" ~ i]["scores"]["player4"] }}</td>
             <td>{{ session["round" ~ i]["scores"]["player1"] + session["round" ~ i]["scores"]["player2"] + session["round" ~ i]["scores"]["player3"] + session["round" ~ i]["scores"]["player4"] }}</td>
-            <td>{{ form.submit(class="btn btn-success btn-sm") }}</td>
-        </form>
-      </tr>
+            {% if i < session["current_round"] %}
+              <td><a class="btn btn-warning btn-sm" href="{{ url_for("scoreboard", edit_round=i) }}" role="button">Szerk.</button></td>
+            {% else %}
+              <td></td>
+            {% endif %}
+            </tr>      
+        {% endif %}
       {% endfor %}
+      <tr style="font-weight:bold">
+        <td colspan="4">Total</td>
+        <td>{{ session["total_scores"]["player1"] }}</td>
+        <td>{{ session["total_scores"]["player2"] }}</td>
+        <td>{{ session["total_scores"]["player3"] }}</td>
+        <td>{{ session["total_scores"]["player4"] }}</td>
+        <td></td>
+        <td></td>
+      </tr>
     </tbody>
 </table>
 {% endblock %}

@@ -20,4 +20,3 @@ class RoundScores(FlaskForm):
     player3_score = IntegerField("Harmadik játékos pontszáma:", validators=[DataRequired()])
     player4_score = IntegerField("Negyedik játékos pontszáma:", validators=[DataRequired()])
     submit = SubmitField("Mentés")
-

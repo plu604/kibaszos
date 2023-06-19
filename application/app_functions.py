@@ -9,6 +9,8 @@ def store_new_game_data(player1, player2, player3, player4):
     session["player2"] = player2
     session["player3"] = player3
     session["player4"] = player4
+    session["total_scores"] = {"player1": 0, "player2": 0, "player3": 0, "player4": 0}
+    session["current_round"] = 1
     for i in range(1, 21):
         # Generate an entry for each round
         session["round" + str(i)] = {"sequence": i, "adu": 0, "direction": 0, "starts": 0, "scores": {"player1": 0, "player2": 0, "player3": 0, "player4": 0}}
@@ -46,3 +48,13 @@ def save_scores(round, player1_score, player2_score, player3_score, player4_scor
     session["round" + str(round)]["scores"]["player2"] = player2_score
     session["round" + str(round)]["scores"]["player3"] = player3_score
     session["round" + str(round)]["scores"]["player4"] = player4_score
+    # Add the scores to the total scores, recalculating each round in case there was an edit
+    session["total_scores"]["player1"] = 0
+    session["total_scores"]["player2"] = 0
+    session["total_scores"]["player3"] = 0
+    session["total_scores"]["player4"] = 0
+    for i in range(1, session["current_round"]):
+        session["total_scores"]["player1"] += session["round" + str(i)]["scores"]["player1"]
+        session["total_scores"]["player2"] += session["round" + str(i)]["scores"]["player2"]
+        session["total_scores"]["player3"] += session["round" + str(i)]["scores"]["player3"]
+        session["total_scores"]["player4"] += session["round" + str(i)]["scores"]["player4"]
