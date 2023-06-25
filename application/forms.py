@@ -3,6 +3,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, SubmitField, HiddenField
 from wtforms.validators import DataRequired
+from application.app_functions import scoring_validation
 
 # Initial form to record player names for the game.
 class NewGameForm(FlaskForm):
@@ -13,10 +14,9 @@ class NewGameForm(FlaskForm):
     submit = SubmitField("Kezdés!")
 
 class RoundScores(FlaskForm):
-    # TODO custom validator should be added to see if the total entered positive scores summed up is 40.
     round_number = HiddenField()
-    player1_score = IntegerField("Első játékos pontszáma:", validators=[DataRequired()])
-    player2_score = IntegerField("Második játékos pontszáma:", validators=[DataRequired()])
-    player3_score = IntegerField("Harmadik játékos pontszáma:", validators=[DataRequired()])
-    player4_score = IntegerField("Negyedik játékos pontszáma:", validators=[DataRequired()])
+    player1_score = IntegerField("Első játékos pontszáma:", validators=[scoring_validation])
+    player2_score = IntegerField("Második játékos pontszáma:", validators=[scoring_validation])
+    player3_score = IntegerField("Harmadik játékos pontszáma:", validators=[scoring_validation])
+    player4_score = IntegerField("Negyedik játékos pontszáma:", validators=[scoring_validation])
     submit = SubmitField("Mentés")
