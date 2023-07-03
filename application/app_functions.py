@@ -1,7 +1,8 @@
 # To store custom functions related to the application
 
-from flask import session, flash
-
+from flask import session
+from datetime import datetime
+from ast import literal_eval
 
 def store_new_game_data(player1, player2, player3, player4):
     # Create new session and add known & dummy data
@@ -11,6 +12,7 @@ def store_new_game_data(player1, player2, player3, player4):
     session["player4"] = player4
     session["total_scores"] = {"player1": 0, "player2": 0, "player3": 0, "player4": 0}
     session["current_round"] = 1
+    session["saved"] = False
     for i in range(1, 21):
         # Generate an entry for each round
         session["round" + str(i)] = {"sequence": i, "adu": 0, "direction": 0, "starts": 0, "scores": {"player1": 0, "player2": 0, "player3": 0, "player4": 0}}
@@ -55,7 +57,7 @@ def save_scores(round, player1_score, player2_score, player3_score, player4_scor
     session["total_scores"]["player2"] = 0
     session["total_scores"]["player3"] = 0
     session["total_scores"]["player4"] = 0
-    for i in range(1, session["current_round"]):
+    for i in range(1, session["current_round"] if session["current_round"] <= 21 else 21):
         session["total_scores"]["player1"] += session["round" + str(i)]["scores"]["player1"]
         session["total_scores"]["player2"] += session["round" + str(i)]["scores"]["player2"]
         session["total_scores"]["player3"] += session["round" + str(i)]["scores"]["player3"]
@@ -71,6 +73,7 @@ def scoring_validation(score1, score2, score3, score4):
     return True
     
 
+# Function to check if the total sum of positive scores entered equals 40.
 def sum_validation(score1, score2, score3, score4):
     sum = 0
     scores = [score1, score2, score3, score4]
@@ -81,6 +84,62 @@ def sum_validation(score1, score2, score3, score4):
         return True
     else:
         return False
+
+
+# Function to save the results to the stats tracker file
+def determine_rankings():
+    # Determine the ranking of the players
+    session["rankings"] = sorted(session["total_scores"].items(), key=lambda x: x[1])
+    session.modified = True
+
+
+def save_endgame_results():
+    # Save the match data to the stats file
+    match_data = dict(date=datetime.utcnow(),
+                      first=session[session["rankings"][0][0]],
+                      second=session[session["rankings"][1][0]],
+                      third=session[session["rankings"][2][0]],
+                      fourth=session[session["rankings"][3][0]])
+    with open("./db/matches.txt", "a") as file:
+        file.write(str(match_data) + "\n")
+    session["saved"] = True
+    session["current_round"] = 21
+    session.modified = True
+
+
+def build_statistics():
+    with open("./db/matches.txt", "r") as matches_file:
+        stats = matches_file.readlines()
+    # Store the names who have participated in matches in a list
+    names = []
+    for match in stats:
+        # remove newline characters
+        match = match.strip()
+        # convert to dictionary
+        match = literal_eval(match)
+        names.append(match["first"])
+        names.append(match["second"])
+        names.append(match["third"])
+        names.append(match["fourth"])
+    names = list(dict.fromkeys(names))
+    # Store the number of matches each player participated in
+    matches = {}
+    for name in names:
+        matches[name] = 0
+        for match in stats:
+            if name in match:
+                matches[name] += 1
+    # Store the number of wins each player participated in
+    wins = {}
+    for name in names:
+        wins[name] = 0
+        for match in stats:
+            if name in match and match["first"] == name:
+                wins[name] += 1
+    with open("./db/stats.txt", "w") as stats_file:
+        stats_file.write(str(names) + "\n")
+        stats_file.write(str(matches) + "\n")
+        stats_file.write(str(wins))
 
 
 # Function to test session-stored scores, is not used now.

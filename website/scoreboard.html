@@ -61,12 +61,12 @@
             <td>{{ session["round" ~ i]["scores"]["player3"] }}</td>
             <td>{{ session["round" ~ i]["scores"]["player4"] }}</td>
             <td>{{ session["round" ~ i]["scores"]["player1"] + session["round" ~ i]["scores"]["player2"] + session["round" ~ i]["scores"]["player3"] + session["round" ~ i]["scores"]["player4"] }}</td>
-            {% if i < session["current_round"] %}
-              <td><a class="btn btn-warning btn-sm" href="{{ url_for("scoreboard", edit_round=i) }}" role="button">Szerk.</button></td>
+            {% if i < session["current_round"] and session["saved"] == False %}
+              <td><a class="btn btn-warning btn-sm" href="{{ url_for("scoreboard", edit_round=i) }}" role="button">Szerk.</a></td>
             {% else %}
               <td></td>
             {% endif %}
-            </tr>      
+          </tr>      
         {% endif %}
       {% endfor %}
       <tr style="font-weight:bold">
@@ -80,4 +80,6 @@
       </tr>
     </tbody>
 </table>
+
+<div class="d-flex justify-content-center"><a class="btn btn-danger" href="{{ url_for("results") }}" role="button">Játék befejezése</a></div>
 {% endblock %}

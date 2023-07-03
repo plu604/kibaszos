@@ -1,0 +1,64 @@
+{% extends "bootstrap_base.html" %}
+
+{% block title %}Kib@szós - Eredmények{% endblock %}
+
+{% block content %}
+<!-- flashable messages -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="alert alert-info" role="alert">
+    {% for message in messages %}
+      {{ message }}
+    {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+
+<div class="container-sm">
+    <table class="table table-borderless">
+        <tbody>
+            <tr class="row justify-content-center h1">
+                <td class="col-sm-3 text-left">Győztes:</td>
+                <td class="col-sm-2 text-center">{{ session[session["rankings"][0][0]] }}</td>
+                <td class="col-sm-2 text-center">{{ session["rankings"][0][1] ~ " pont" }}</td>
+            </tr>
+            <tr class="row justify-content-center h2">
+                <td class="col-sm-3 text-left">Második helyezett:</td>
+                <td class="col-sm-2 text-center">{{ session[session["rankings"][1][0]] }}</td>
+                <td class="col-sm-2 text-center">{{ session["rankings"][1][1] ~ " pont" }}</td>
+            </tr>
+            <tr class="row justify-content-center h3">
+                <td class="col-sm-3 text-left">Harmadik helyezett:</td>
+                <td class="col-sm-2 text-center">{{ session[session["rankings"][2][0]] }}</td>
+                <td class="col-sm-2 text-center">{{ session["rankings"][2][1] ~ " pont" }}</td>
+            </tr>
+            <tr class="row justify-content-center h4">
+                <td class="col-sm-3 text-left">Sereghajtó:</td>
+                <td class="col-sm-2 text-center">{{ session[session["rankings"][3][0]] }}</td>
+                <td class="col-sm-2 text-center">{{ session["rankings"][3][1] ~ " pont" }}</td>
+            </tr>
+            <tr class="row">
+                <td colspan="3">
+                    <div class="d-flex justify-content-center py-4">
+                        <a class="btn btn-success" href="{{ url_for('save') }}" role="button">Eredmény mentése</a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row">
+                <td colspan="3">
+                    <div class="d-flex justify-content-center">
+                        <a class="btn btn-info" href="{{ url_for('scoreboard') }}" role="button">Vissza a pontszámokhoz</a>
+                    </div>
+                </td>
+            </tr>
+            <tr class="row">
+                <td colspan="3">
+                    <div class="d-flex justify-content-center py-4">
+                        <a class="btn btn-dark" href="{{ url_for('statistics') }}" role="button">Statisztika</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+{% endblock %}
