@@ -1,6 +1,10 @@
-{'date': datetime.datetime(2023, 7, 2, 8, 5, 29, 250656), 'first': 'dsajkl', 'second': 'patrik', 'third': 'arwe', 'fourth': 'haver'}
-{'date': datetime.datetime(2023, 7, 2, 8, 23, 9, 43058), 'first': 'arwe', 'second': 'erki', 'third': 'haver', 'fourth': 'dsajkl'}
-{'date': datetime.datetime(2023, 7, 2, 8, 37, 40, 271693), 'first': 'haver', 'second': 'waef', 'third': 'dsahjk', 'fourth': 'dsal'}
-{'date': datetime.datetime(2023, 7, 2, 9, 51, 45, 291041), 'first': 'haver', 'second': 'dsajkl', 'third': 'arwe', 'fourth': 'patrik'}
-{'date': datetime.datetime(2023, 7, 2, 9, 58, 57, 692040), 'first': 'haver', 'second': 'erki', 'third': 'waef', 'fourth': 'dsajkl'}
-{'date': datetime.datetime(2023, 7, 2, 10, 13, 44, 200215), 'first': 'haver', 'second': 'zsuzsa', 'third': 'dsal', 'fourth': 'dsahjk'}
+{'date': '2023-07-07 08:48:14.818289', 'first': 'arwe', 'second': 'haver', 'third': 'patrik', 'fourth': 'dsajkl'}
+{'date': '2023-07-07 08:55:51.909008', 'first': 'dsaél', 'second': 'haver', 'third': 'fsd', 'fourth': 'dsahjk'}
+{'date': '2023-07-07 08:57:59.143742', 'first': 'zsuzsa', 'second': 'cg4', 'third': 'patrik', 'fourth': 'eta'}
+{'date': '2023-07-07 09:02:11.820232', 'first': 'keco', 'second': 'mm', 'third': 'fgh', 'fourth': 'fds'}
+{'date': '2023-07-07 09:08:40.256175', 'first': 'arwe', 'second': 'haver', 'third': 'jdkslj', 'fourth': 'dsajkl'}
+{'date': '2023-07-07 09:12:24.674211', 'first': 'erki', 'second': 'haver', 'third': 'arwe', 'fourth': 'dsajkl'}
+{'date': '2023-07-07 09:14:00.105895', 'first': 'ghtd', 'second': 'a', 'third': 'kop', 'fourth': 'pap'}
+{'date': '2023-07-07 09:15:33.624022', 'first': 'ehe', 'second': 'negyes', 'third': 'ae', 'fourth': 'tet'}
+{'date': '2023-07-07 09:22:51.302555', 'first': 'jsai', 'second': 'zujdf', 'third': 'gyere', 'fourth': 'wre'}
+{'date': '2023-07-07 09:27:11.529536', 'first': 'dsal', 'second': 'haver', 'third': 'arwe', 'fourth': 'dsahjk'}

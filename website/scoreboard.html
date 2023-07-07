@@ -42,10 +42,10 @@
             <form action="", method="post", novalidate>
               {{ form.csrf_token() }}
               {{ form.round_number(value=session["round" ~ i]["sequence"]) }}
-              <td>{{ form.player1_score(value=session["round" ~ i]["scores"]["player1"], maxlength="3", size="2") }}</td>
-              <td>{{ form.player2_score(value=session["round" ~ i]["scores"]["player2"], maxlength="3", size="2") }}</td>
-              <td>{{ form.player3_score(value=session["round" ~ i]["scores"]["player3"], maxlength="3", size="2") }}</td>
-              <td>{{ form.player4_score(value=session["round" ~ i]["scores"]["player4"], maxlength="3", size="2") }}</td>
+              <td>{{ form.player1_score(value=session["round" ~ i]["scores"]["player1"], maxlength="3", size="3") }}</td>
+              <td>{{ form.player2_score(value=session["round" ~ i]["scores"]["player2"], maxlength="3", size="3") }}</td>
+              <td>{{ form.player3_score(value=session["round" ~ i]["scores"]["player3"], maxlength="3", size="3") }}</td>
+              <td>{{ form.player4_score(value=session["round" ~ i]["scores"]["player4"], maxlength="3", size="3") }}</td>
               <td>{{ session["round" ~ i]["scores"]["player1"] + session["round" ~ i]["scores"]["player2"] + session["round" ~ i]["scores"]["player3"] + session["round" ~ i]["scores"]["player4"] }}</td>
               <td>{{ form.submit(class="btn btn-success btn-sm") }}</td>
             </form>

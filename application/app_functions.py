@@ -4,6 +4,7 @@ from flask import session
 from datetime import datetime
 from ast import literal_eval
 
+
 def store_new_game_data(player1, player2, player3, player4):
     # Create new session and add known & dummy data
     session["player1"] = player1
@@ -95,7 +96,7 @@ def determine_rankings():
 
 def save_endgame_results():
     # Save the match data to the stats file
-    match_data = dict(date=datetime.utcnow(),
+    match_data = dict(date=str(datetime.utcnow()),
                       first=session[session["rankings"][0][0]],
                       second=session[session["rankings"][1][0]],
                       third=session[session["rankings"][2][0]],
@@ -113,8 +114,6 @@ def build_statistics():
     # Store the names who have participated in matches in a list
     names = []
     for match in stats:
-        # remove newline characters
-        match = match.strip()
         # convert to dictionary
         match = literal_eval(match)
         names.append(match["first"])
@@ -127,14 +126,16 @@ def build_statistics():
     for name in names:
         matches[name] = 0
         for match in stats:
-            if name in match:
+            match = literal_eval(match)
+            if name == match["first"] or name == match["second"] or name == match["third"] or name == match["fourth"]:
                 matches[name] += 1
     # Store the number of wins each player participated in
     wins = {}
     for name in names:
         wins[name] = 0
         for match in stats:
-            if name in match and match["first"] == name:
+            match = literal_eval(match)
+            if match["first"] == name:
                 wins[name] += 1
     with open("./db/stats.txt", "w") as stats_file:
         stats_file.write(str(names) + "\n")
